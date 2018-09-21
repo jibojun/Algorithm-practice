@@ -1,5 +1,7 @@
 package Arrays;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -38,24 +40,27 @@ public class DegreeOfAnArray {
         if (nums.length == 0) {
             return 0;
         }
-        Map<Integer, int[]> map = new HashMap<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             if (!map.containsKey(nums[i])) {
-                int[] intArray = new int[2];
-                intArray[0] = i;
-                map.put(nums[i], intArray);
+                List<Integer> list = new ArrayList<>();
+                list.add(i);
+                map.put(nums[i], list);
             } else {
-                int[] intArray = map.get(nums[i]);
-                intArray[1] = i;
-                map.put(nums[i], intArray);
+                List<Integer> list = map.get(nums[i]);
+                list.add(i);
+                map.put(nums[i], list);
             }
         }
+        int degree = 0;
         int result = 0;
-        for (Map.Entry<Integer, int[]> item : map.entrySet()) {
-            int[] array = item.getValue();
-            int tmp = array[1] - array[0];
-            if (tmp < result) {
-                result = tmp;
+        for (Map.Entry<Integer, List<Integer>> item : map.entrySet()) {
+            List<Integer> list = item.getValue();
+            if (list.size() > degree) {
+                degree = list.size();
+                result = list.get(list.size() - 1) - list.get(0) + 1;
+            } else if (list.size() == degree) {
+                result = Math.min(result, list.get(list.size() - 1) - list.get(0) + 1);
             }
         }
         return result;
