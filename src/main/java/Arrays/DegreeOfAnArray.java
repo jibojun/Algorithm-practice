@@ -38,18 +38,24 @@ public class DegreeOfAnArray {
         if (nums.length == 0) {
             return 0;
         }
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int num : nums) {
-            if (!map.containsKey(num)) {
-                map.put(num, 1);
+        Map<Integer, int[]> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (!map.containsKey(nums[i])) {
+                int[] intArray = new int[2];
+                intArray[0] = i;
+                map.put(nums[i], intArray);
             } else {
-                map.put(num, map.get(num) + 1);
+                int[] intArray = map.get(nums[i]);
+                intArray[1] = i;
+                map.put(nums[i], intArray);
             }
         }
         int result = 0;
-        for (Map.Entry<Integer, Integer> item : map.entrySet()) {
-            if (item.getValue() > result) {
-                result = item.getValue();
+        for (Map.Entry<Integer, int[]> item : map.entrySet()) {
+            int[] array = item.getValue();
+            int tmp = array[1] - array[0];
+            if (tmp < result) {
+                result = tmp;
             }
         }
         return result;
