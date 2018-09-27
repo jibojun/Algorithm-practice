@@ -42,11 +42,11 @@ public class AverageOfLevelsInBinaryTree {
             for (int i = 0; i < size; i++) {
                 TreeNode t = queue.poll();
                 sum += t.val;
-                if (root.left != null) {
-                    queue.offer(root.left);
+                if (t.left != null) {
+                    queue.offer(t.left);
                 }
-                if (root.right != null) {
-                    queue.offer(root.right);
+                if (t.right != null) {
+                    queue.offer(t.right);
                 }
             }
             resultList.add(sum / size);
