@@ -40,10 +40,11 @@ public class MinimumDepthOfBinaryTree {
         int dep = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
-            int count = 1;
-            while (count <= size) {
+            boolean found = false;
+            for (int i = 0; i < size; i++) {
                 TreeNode t = queue.poll();
                 if (t.left == null && t.right == null) {
+                    found = true;
                     break;
                 }
                 if (t.left != null) {
@@ -52,10 +53,9 @@ public class MinimumDepthOfBinaryTree {
                 if (t.right != null) {
                     queue.offer(t.right);
                 }
-                count++;
             }
             dep++;
-            if (count < size) {
+            if (found) {
                 break;
             }
         }
