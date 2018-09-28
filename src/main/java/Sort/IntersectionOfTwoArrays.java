@@ -30,13 +30,19 @@ public class IntersectionOfTwoArrays {
      * @param nums2
      * @return
      */
-    public int[] intersection(int[] nums1, int[] nums2) {
+    public static int[] intersection(int[] nums1, int[] nums2) {
         Arrays.sort(nums1);
         Arrays.sort(nums2);
         Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < nums1.length && i < nums2.length; i++) {
-            if (nums1[i] == nums2[i]) {
+        for (int i = 0, j = 0; i < nums1.length && j < nums2.length; ) {
+            if (nums1[i] == nums2[j]) {
                 set.add(nums1[i]);
+                i++;
+                j++;
+            } else if (nums1[i] < nums2[j]) {
+                i++;
+            } else {
+                j++;
             }
         }
         int[] resultArray = new int[set.size()];
@@ -45,5 +51,11 @@ public class IntersectionOfTwoArrays {
             resultArray[i] = (int) objectArray[i];
         }
         return resultArray;
+    }
+
+    public static void main(String[] args) {
+        int[] nums1 = new int[]{1, 2, 2, 1};
+        int[] nums2 = new int[]{2, 2};
+        System.out.println(Arrays.toString(intersection(nums1, nums2)));
     }
 }
