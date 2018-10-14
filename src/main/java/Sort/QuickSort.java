@@ -9,35 +9,45 @@ import java.util.Arrays;
  */
 public class QuickSort {
 
-    public void quickSort(int[] array, int low, int high) {
-        if (low < high) {
-            int middle = getMiddle(array, low, high);
-            getMiddle(array, low, middle - 1);
-            getMiddle(array, middle + 1, high);
+    public void quickSort(int[] array) {
+        if (array == null || array.length <= 1) {
+            return;
         }
+        sort(array, 0, array.length - 1);
     }
 
-    public int getMiddle(int[] array, int low, int high) {
-        int key = array[low];
-        while (low < high) {
-            while (low < high && array[high] >= key) {
-                high--;
-            }
-            array[low] = array[high];
-            while (low < high && array[low] <= key) {
-                low++;
-            }
-            array[high] = array[low];
+    public void sort(int[] array, int low, int high) {
+        if (low > high) {
+            return;
         }
-        array[low] = key;
-        return low;
+        int start = low;
+        int end = high;
+        int key = array[low];
+        while (start < end) {
+            while (start < end && array[end] >= key) {
+                end--;
+            }
+            while (start < end && array[start] <= key) {
+                start++;
+            }
+            if (start < end) {
+                int tmp = array[start];
+                array[start] = array[end];
+                array[end] = tmp;
+            }
+        }
+        int tmp = array[low];
+        array[low] = array[start];
+        array[start] = tmp;
+        sort(array, low, start - 1);
+        sort(array, start + 1, high);
     }
 
     public static void main(String[] args) {
         int[] a = {3, 4, 6, 5, 7, 8, 6, 0};
         System.out.println(Arrays.toString(a));
         QuickSort q = new QuickSort();
-        q.quickSort(a, 0, a.length - 1);
+        q.quickSort(a);
         System.out.println(Arrays.toString(a));
     }
 }
